@@ -1,0 +1,60 @@
+---
+title: "Taller Geoportales"
+author: "Maria Jose Duarte H"
+format: 
+ html: default
+ pdf: default
+---
+
+# Introducción
+Para esta actividad se utilizaron datos del Instituto Geográfico Agustin Codazi como referencia para realizar un mapa de paisaje del departamento del Huila, Colombia, usando Qgis, los otros servicios no utilizados para la elaboración del mapa se descargaron o abrieron en qgis para identificarlos. 
+
+# Fuentes
+
+**Tabla 1.** Fuentes y archivos utilizados para el ejercicio
+
+| Fuente                    | URL                                                                 | Archivo Local                                                                 | Sistema de Coordenadas                          |
+|---------------------------|---------------------------------------------------------------------|-------------------------------------------------------------------------------|------------------------------------------------|
+| WMS Amenaza Sísmica       | https://srvags.sgc.gov.co/arcprod/services/Amenaza_Sismica/Amenaza_Sismica/MapServer/WMSServer? | Capa observada en QGIS                                                        | MAGNA-SIRGAS 2018 / Origen Nacional           |
+| WFS Atlas Geológico 2015  | https://srvags.sgc.gov.co/arcgis/services/Atlas_Geologico_2015/WFS_Atlas_Geologico_2015/MapServer/WFSServer? | Capa observada en QGIS                                                        | MAGNA-SIRGAS 2018 / Origen Nacional           |
+| Shapefile Paisaje         | https://www.colombiaenmapas.gov.co/?b=igac&u=0&t=43&servicio=7      | [Paisaje.shp](paisaje_shapefile.shp) [Paisaje.shs](paisaje_shapefile.shx) [Paisaje.dbf](paisaje_shapefile.dbf) [Paisaje.prj](paisaje_shapefile.prj) | MAGNA-SIRGAS 2018 / Origen Nacional           |
+| GeoTIFF Elevación         | https://www.colombiaenmapas.gov.co/?e=-74.38604836181477,4.491446196268778,-73.84703163818268,4.796342178492291,4686&b=igac&l=1117&u=0&t=23&servicio=1117    |      [Elevacion.tif](DTM_Catastro_EPSG4686.tif)  | MAGNA-SIRGAS 2018 / Origen Nacional           |
+
+
+
+
+
+# Productos cartográficos
+
+[Descargar mapa en PDF](paisaje_huila.pdf)
+
+# Cuestionario de Análisis 
+
+**¿Qué archivos/servicios permiten la edición de geometrías directamente?**
+
+Los archivos que permiten edición son: 
+
+*Shapefile:* este puede subirse y editarse de forma directa generando puntos, polígonos, cortando sobre este otras capas y demás. 
+
+*Web Feature Service:* esta herramienta también tiene una modalidad que permite realizar ediciones directas modificando puntos, sin embargo, para la elaboración del mapa no se utilizó ningún archivo WFS pero se realizó la conexión con el Atlas Geológico de Colombia para realizar el ejercicio como se muestra en la Tabla 1. 
+
+*GeoTIFF:* este archivo raster permite la edición de los pixeles, realizar operaciones para cortar capas y demás, en el ejercicio se uso como referencia un archivo DEM  descargado de la base de datos del IGAC(Tabla 1). 
+
+Los otros archivos como Web Map Service (WMS) son unicamente herramientas de visualización de datos actualizados, en este caso no es posible editar los datos ni las imágenes, el utilizado en el ejercicio corresponde a Amenaza sismica y se obtuvo de https://www2.sgc.gov.co/sgc/mapas/Geoservicio/Paginas/geoservicios.aspx 
+
+**¿Cuáles permiten acceso a la tabla de atributos? Describa tres campos de uno de ellos.**
+
+Los archivos que permiten acceso son el WFS y el shapefile, en este caso algunos campos del utilizado son PAISAJE, CLIMA_AMBIENTAL, LITOLOGIA, todos estos datos fueron descargados de https://www.colombiaenmapas.gov.co/?b=igac&u=0&t=43&servicio=7 y luego trabajados sobre qgis
+
+**¿En qué casos fue posible cambiar la simbología desde el software cliente?**
+
+En el caso del shapefile para el que se hizo la clasificación por paisaje, se cambian los colores, se especifican detalles para la leyenda, etc... 
+
+**¿Por qué es preferible usar un WFS sobre un Shapefile descargado en proyectos a largo plazo?**
+
+El shapefile es unicamente una forma con una serie de datos que deben ser actualizados cada vez que se trabajan, es decir, se debe descargar nuevamente la información nueva, por otro lado, la ventaja que trae utilizar WFS es que los datos que se trabajan están siempre actualizados. Además, de dar acceso y edición a objetos geográficos (https://www.idee.es/resources/documentos/GuiaInsercionWFS.pdf)
+
+# Videos utilizados de guia 
+https://www.youtube.com/watch?v=QKDTIWjkrj0
+
+https://www.youtube.com/watch?v=ynMsYWTCtKA
