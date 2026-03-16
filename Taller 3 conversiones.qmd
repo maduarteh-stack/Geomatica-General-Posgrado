@@ -1,0 +1,38 @@
+---
+title: "Taller 3 conversiones"
+author: "Maria Jose Duarte H"
+format: 
+  html: default
+  pdf: default
+---
+
+# Ejercicio 1
+
+Para la primera parte del ejercicio se realizó la conversión desde qgis del archivo vector de datos Belvisma y se abrió en Google Earth, las coordenadas coinciden con la superficie terrestre como se muestra a continuación. 
+
+![Ejercicio 1 qgis](Captura%20de%20pantalla%202026-03-15%20204836.png)
+
+En arcgis se realizó desde la opción de exportación de la capa, se trabajó con la capa carbelvi.shp y se subió el kmz a  Google Earth como se muestra en la imagen. Se puede descargar el archivo [Carbelvi_ejercicio1.kmz](../carbelvi_ejercicio1.kmz)
+
+![Ejercicio 1 arcgis pro](Captura%20de%20pantalla%202026-03-15%20222957.png)
+
+**Explique por qué es un error intentar abrir un KML con coordenadas planas (metros) en Google Earth. ¿Por qué decimos que este visor no tiene “proyección al vuelo”?**
+
+Google Earth interpreta coordenadas geográficas que incluyen latitud y longitud mientras que las planas utilizan coordenadas X y Y, por tanto si se pasa un archivo con coordenadas plantas el interfaz de Google Earth lo interpreta como grados y no metros y al hacer la conversión es necesario hacer la transformación de coordenadas de modo que las planas coincidan con las geográficas y el mapa se encuentre en la ubicación deseada. 
+
+A diferencia de otros programas, Google Earth no detecta ni transforma de forma automática las coordenadas, solo muestra los datos en latitud y longitud, por esta razón no tiene proyección al vuelo. 
+
+# Ejercicio 2
+
+Este ejercicio se realizó en arcgis pro, los municipios resultantes de los dos filtros se encuentran en esta imagen. 
+
+![Resultado ejercicio 2](Captura%20de%20pantalla%202026-03-16%20010314.png)
+
+**Para este proceso de filtrado, ¿es más eficiente realizar primero el filtro por nombre (Atributos) o el filtro por radio de 40 km (Espacial)? Justifique su decisión pensando en el ahorro de memoria del computador.**
+
+En este caso, el filtro que utiliza menos memoria y se realiza más rápido es del nombre, ya que el filtro de distancia de las coordenadas implica mediciones, comparaciones de polígonos  que consumen más memoria y CPU, por tanto, el filtro del nombre, que solo lee la tabla de atributos, reduce el número de operaciones que tiene que hacer el programa y el segundo filtro se ejecuta sobre un número de municipios más pequeño. 
+
+
+**Reflexión sobre Interoperabilidad: Al cargar los datos en PostGIS, vimos que ArcGIS Pro presenta restricciones con el nombre de los esquemas. Explique, basado en su experiencia en el Ejercicio 9, por qué usar QGIS como “puente” facilita la carga de datos hacia PostgreSQL/PostGIS.**
+
+No me fue posible subirlo a postgis, se necesita preguntar en clase. 
