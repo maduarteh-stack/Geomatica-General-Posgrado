@@ -1,0 +1,100 @@
+---
+title: "Taller 8 Modelos Digitales de Elevacion"
+author: "Wilder Clavijo, Nicolas Piracun, Suly Gonzalez y Maria Jose Duarte H"
+format: 
+  html: default
+  pdf: default
+---
+
+## Zona de estudio 
+
+Este ejercicio se realizó para el municipio de Ipiales, ubicado en el departamento de Nariño. 
+
+## Adquisición de datos 
+
+Se realizo la adquisión de datos desde Google Earth Engine con el siguiente código 
+
+// Cargar dataset de divisiones administrativas
+var gaul = ee.FeatureCollection("FAO/GAUL/2015/level2");
+
+// Filtrar Colombia
+var colombia = gaul.filter(ee.Filter.eq('ADM0_NAME', 'Colombia'));
+
+// Filtrar municipio de Ipiales
+var ipiales = colombia.filter(ee.Filter.eq('ADM2_NAME', 'Ipiales'));
+
+// Mostrar municipio
+Map.addLayer(ipiales, {}, "Ipiales");
+Map.centerObject(ipiales, 10);
+
+// Cargar MDE SRTM
+var srtm = ee.Image("USGS/SRTMGL1_003");
+
+// Recortar DEM al municipio
+var mde_clip = srtm.clip(ipiales);
+
+// Visualizar DEM
+Map.addLayer(
+  mde_clip,
+  {min:2500, max:3500, palette:['blue','green','yellow','brown','white']},
+  "MDE Ipiales"
+);
+
+// Exportar en MAGNA-SIRGAS 2018 / Origen-Nacional
+Export.image.toDrive({
+  image: mde_clip,
+  description: "MDE_Ipiales_MAGNA",
+  folder: "GEE",
+  fileNamePrefix: "MDE_Ipiales_MAGNA",
+  scale: 30,
+  region: ipiales.geometry(),
+  crs: "EPSG:9377",
+  maxPixels: 1e13,
+  fileFormat: "GeoTIFF"
+});
+
+
+
+## Procesamiento espacial 
+
+Para las variables determinadas primero se realizó el procesamiento de fill del DEM descargado con el objetivo de completar y corregir depresiones y sumideros. Para cada variable se aplicaron rampas de color específicas para facilitar la comprensión de los resultados. 
+
+**Mapa Fill**
+
+![](MDEfill.png)
+
+
+**Pendiente:** Indica el ángulo que se forma entre la superficie del terreno y la horizontal.
+
+![](pendiente.png)
+
+
+**Pendiente senoidal:** Calculada a partir de la pendiente en grados, corresponde al seno del producto de la pendiente por la constante 2. 
+
+![](pendsen.png)
+
+**Curvatura:** Indica el grado de convexidad o concavidad del terreno. 
+
+![](curvatura.png)
+
+
+Valores negativos (azul) indican superficies concavas, valores positivos incidan superficies convexas (rojos) y valores cercanos a cero representan superficies planas (blanco)
+
+**Dirección de flujo:** este es un raster categorico o discreto que indica hacia cuál celda se desplaza el agua según la pendiente máxima del terreno. 
+
+![](flow_direct.png)
+
+**Acumulación de flujo:** Esta representa la centidad de celdas que aportan escorrentía hacia una ubicación, es decir, muestra las zonas de cauces y drenaje. 
+
+![](flow_acc.png)
+
+**Longitud del flujo aguas abajo:** Es la distancia recorrida por el agua siguiendo la diracción natural del flujo en la zona de estudio. 
+
+![](longitud_flujo.png)
+
+## Análisis comparativo 
+
+Para este análisis se utilizaron como referencias las variables curvatura y longitud de flojo entre ArcGIS y SAGA GIS. Para al dirección de flujo SAGA presentó una distribución de flujo más detallada en zonas de pendiente compleja y ARGIS mostró resultados menos detallados pero más fáciles de procesar. Para la curvatura, se presentaron valores más extremos en ArcGIS y una representación más suave en SAGA. En eficiencia computacional ArcGIS mostró un procesamiento más estable y rápido con tiempos de procesamiento menores. 
+
+
+
